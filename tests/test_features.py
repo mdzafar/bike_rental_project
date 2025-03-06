@@ -1,6 +1,7 @@
 import pytest
 import pandas as pd
 import numpy as np
+from datetime import datetime
 from bike_rental_model.config.core import config
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
@@ -20,20 +21,25 @@ def pipeline():
         ('scaler', StandardScaler())    
     ])
 
-# def test_weekday_imputer(sample_input_data):
-#     # imputer = WeekdayImputer(date_column='dteday')
-#     # transformed = imputer.fit_transform(sample_input_data)
-#     # assert transformed['weekday'].isnull().sum() == 0
-#     transformer = WeekdayImputer(
-#         config.model_config_.dteday_var.dt.strftime('%Y-%m-%d'),
-#         config.model_config_.weekday_var # cabin
-#     )
-    
-#     print("before",set(sample_input_data[0]["weekday"].to_list()))
-#     subject = transformer.transform(sample_input_data[0])
-#     # assert np.isnan(sample_input_data[0].iloc[7,4])
-#     print("after",set(sample_input_data[0]["weekday"].to_list()))
-#     assert True == False
+def test_weekday_imputer(sample_input_data):
+    # imputer = WeekdayImputer(date_column='dteday')
+    # transformed = imputer.fit_transform(sample_input_data)
+    # assert transformed['weekday'].isnull().sum() == 0
+    print(config.model_config_.dteday_var)
+    # print(datetime.strptime(config.model_config_.dteday_var, '%Y-%m-%d'))
+    transformer = WeekdayImputer(
+        config.model_config_.dteday_var,
+        config.model_config_.weekday_var 
+    )
+    print("before",set(sample_input_data[0]["weekday"].to_list()))
+    sample_input_data[0]['dteday'] = pd.to_datetime(sample_input_data[0]['dteday'], errors='coerce')
+    subject = transformer.transform(sample_input_data[0])
+    subject = set(subject["weekday"])
+    # assert np.isnan(sample_input_data[0].iloc[7,4])
+    # print("after",set(subject["weekday"].to_list()))
+    expected_res = {'Mon', 'Wed', 'Fri', 'Thu', 'Tue', 'Sun', 'Sat'}
+    print(sorted(subject),sorted(expected_res))
+    assert all([a == b for a, b in zip(sorted(subject), sorted(expected_res))])
 
 def test_weathersit_imputer(sample_input_data):
     transformer = WeathersitImputer(
