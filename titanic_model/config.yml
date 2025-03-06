@@ -1,0 +1,65 @@
+# Data Files
+training_data_file: titanic.csv
+# test_data_file: test.csv
+
+# Variables
+# The variable we are attempting to predict (Survival)
+target: Survived
+
+pipeline_name: titanic_model
+pipeline_save_file: titanic__model_output_v
+
+features:      # final features to be use
+  - Pclass
+  - Sex
+  - Age 
+  - Fare 
+  - Embarked
+  - FamilySize  # generated  by  Sibsp + Parch +1 <--Before pipeline alongwith loading the data
+  - Has_cabin   # generated cabin              <--Before pipeline alongwith loading the data
+  - Title       # generated from name          <--Before pipeline alongwith loading the data
+
+unused_fields:  # Features to drop before pipeline
+  - PassengerId
+  - Name
+  - SibSp
+  - Parch
+  - Ticket
+  - Cabin
+
+# Features inside processing pipeline
+
+embarked_var: Embarked  # first imputatation , then --> Mappeing
+  
+gender_var: Sex
+
+title_var: Title
+
+age_var: Age 
+
+gender_mappings:
+  female: 0
+  male: 1
+
+embarked_mappings:
+  S: 0
+  C: 1
+  Q: 2
+
+title_mappings:
+  Mrs: 4
+  Master: 3
+  Miss: 2
+  Mr: 1
+  Other: 0
+
+  
+# set train/test split
+test_size: 0.20
+
+# to set the random seed
+random_state: 42
+# alogrithm parameters
+n_estimators: 150
+max_depth: 5
+max_features: 3
