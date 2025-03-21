@@ -5,8 +5,5 @@ pydantic
 pydantic-settings
 
 # If locally copied whl file inside bike_rental_api then use given below
-bike_rental_model-0.0.1-py3-none-any.whl
-
-# If uploded your package in PyPI then use the given below
-#titanic-model==0.0.1
+# bike_rental_model-0.0.1-py3-none-any.whl
 
