@@ -170,3 +170,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Don't commit package wheel and pickled model files
+*.whl
+*.pkl
