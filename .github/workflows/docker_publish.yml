@@ -27,7 +27,6 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./bike_rental_api                     
-          file: ./bike_rental_api/Dockerfile             
+          context: .           
           push: true
           tags: mdzafar/bike_rental_api:latest
