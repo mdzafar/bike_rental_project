@@ -1,4 +1,4 @@
-name: Bike Rental Model Training and Package Setup
+name: model_pipeline
 
 on:
   push:
