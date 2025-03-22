@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  train-test-package:
+  build:
     runs-on: ubuntu-latest
 
     steps:
